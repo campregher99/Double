@@ -1,23 +1,17 @@
 #include "Double.h"
 
-static bool Double::setMultiplier(int _multiplier)
-{
-	if(_multiplier<10)
-		return false;
-	multiplier=_multiplier;
-	return true;
-}
+
 
 double Double::getValue() const
 {
-	if(lastMultiplier!=multiplier)
+	if(lastMultiplier!=getMultiplier())
 		return value/(double)lastMultiplier;
-	return value/(double)multiplier;
+	return value/(double)getMultiplier();
 }
 
 int Double::getRowValue() const
 {
-	if(lastMultiplier!=multiplier)
+	if(lastMultiplier!=getMultiplier())
 	{
 		int newValue=value*adjustValue();
 		return newValue;
@@ -27,35 +21,35 @@ int Double::getRowValue() const
 
 Double Double::operator+(const Double& _double) const
 {
-	Double* newDouble;
-	newDouble->setValue(getRowValue()+_double.getRowValue());
+	Double* newDouble= new Double {};
+	newDouble->setRowValue(getRowValue()+_double.getRowValue());
 	return *newDouble;
 }
 
 Double Double::operator-(const Double& _double) const
 {
-	Double* newDouble;
-	newDouble->setValue(getRowValue()-_double.getRowValue());
+	Double* newDouble= new Double {};
+	newDouble->setRowValue(getRowValue()-_double.getRowValue());
 	return *newDouble;
 }
 
 Double Double::operator*(const Double& _double) const
 {
-	Double* newDouble;
-	newDouble->setValue(getRowValue()*_double.getValue());
+	Double* newDouble= new Double {};
+	newDouble->setRowValue(getRowValue()*_double.getValue());
 	return *newDouble;
 }
 
 Double Double::operator/(const Double& _double) const
 {
-	Double* newDouble;
-	newDouble->setValue(getRowValue()/(double)_double.getRowValue()*multiplier);
+	Double* newDouble = new Double {};
+	newDouble->setRowValue(getRowValue()/(double)_double.getRowValue()*getMultiplier());
 	return *newDouble;
 }
 
 Double Double::operator=(const Double& _double)
 {
-	if(multiplier!=lastMultiplier)
+	if(getMultiplier()!=lastMultiplier)
 		adjustValue();
 	value=_double.getRowValue();
 	return *this;
@@ -120,25 +114,25 @@ bool Double::operator<=(const Double& _double) const
 	return false;
 }
 
-bool operator>=(const Double& _double) const
+bool Double::operator>=(const Double& _double) const
 {
 	if(*this==_double||*this>_double)
 		return true;
 	return false;
 }
 
-static int getMultiplier()
+double Double::adjustValue() const
 {
-	return multiplier;
+	return (double)getMultiplier()/lastMultiplier;
 }
 
-double adjustValue() const
+void Double::adjustValue()
 {
-	return (double)multiplier/lastMultiplier;
+	value*=(double)getMultiplier()/lastMultiplier;
+	lastMultiplier = getMultiplier();
 }
 
-void adjustValue()
+void Double::setRowValue(int _number)
 {
-	value*=(double)multiplier/lastMultiplier;
-	lastMultiplier = multiplier;
+	value = _number; 
 }
