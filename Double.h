@@ -133,5 +133,31 @@ template <typename T> bool operator!=(const T& _number) const
 	return false;
 }
 
+template <typename T> bool operator<(const T& _number) const
+{
+	if(getValue()<_number)
+		return true;
+	return false;
+}
 
+template <typename T> bool operator>(const T& _number) const
+{
+	if(!(*this<_number))
+		return true;
+	return false;
+}
+
+template <typename T> bool operator<=(const T& _number) const
+{
+	if(*this<_number||*this==_number)
+		return true;
+	return false;
+}
+
+template <typename T> bool operator>=(const T& _number) const
+{
+	if(*this>_number||*this==_number)
+		return true;
+	return false;
+}
 #endif
