@@ -172,5 +172,23 @@ template <typename T> bool Double::operator>=(const T& _number) const
 	return false;
 }
 
+template <typename T> T operator+(const T& _number, const Double& _double)
+{
+	return _number+_double.getValue();
+}
 
+template <typename T> T operator-(const T& _number, const Double& _double)
+{
+	return _number-_double.getValue();
+}
+
+template <typename T> T operator*(const T& _number, const Double& _double)
+{
+	return _number*_double.getValue();
+}
+
+template <typename T> T operator/(const T& _number, const Double& _double)
+{
+	return _number/_double.getValue();
+}
 #endif
