@@ -59,6 +59,24 @@ public:
 	template <typename T> bool operator>=(const T& _number) const;
 	bool operator>=(const Double& _double) const;
 
+	operator int() const {return getValue();};
+	operator unsigned int() const
+	{
+		if(value<0)
+			return -getValue();
+		return -getValue();
+	};
+	operator long int() const {return getValue();};
+	operator long long int() const {return getValue();};
+	operator unsigned long long int() const 
+	{
+		if(value<0)
+			return -getValue();
+		return -getValue();
+	};
+	operator float() const {return getValue();};
+	operator double() const {return getValue();};
+	operator long double() const {return getValue();};
 
 protected:
 	static int getMultiplier()
