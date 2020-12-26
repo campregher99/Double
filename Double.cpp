@@ -136,4 +136,3 @@ void Double::setRowValue(int _number)
 {
 	value = _number; 
 }
-

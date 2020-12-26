@@ -12,7 +12,7 @@ private:
 
 public:
 	Double()=default;
-	template <typename T> Double(T _number) : value {_number*multiplier} {};
+	template <typename T> explicit Double(T _number) : value {_number*multiplier} {};
 	static bool setMultiplier(int _multiplier)
 	{
 	if(_multiplier<10)
@@ -59,6 +59,27 @@ public:
 	template <typename T> bool operator>=(const T& _number) const;
 	bool operator>=(const Double& _double) const;
 
+	double pow(const int& _exp) const
+	{
+	Double* newDouble = new Double();
+	if(_exp>0)
+	{
+		newDouble->setRowValue(getRowValue());
+		for(int i = 1; i<_exp; i++)
+		{
+			newDouble->setRowValue(newDouble->getRowValue()*getValue());
+		}
+	}else
+	{
+		newDouble->setRowValue(1);
+		for (int i = 0; i > _exp; i--)
+		{
+			newDouble->setRowValue(newDouble->getRowValue()/getValue());
+		}
+	}
+	return *newDouble;
+};
+
 	operator int() const {return getValue();};
 	operator unsigned int() const
 	{
@@ -66,17 +87,7 @@ public:
 			return -getValue();
 		return -getValue();
 	};
-	operator long int() const {return getValue();};
-	operator long long int() const {return getValue();};
-	operator unsigned long long int() const 
-	{
-		if(value<0)
-			return -getValue();
-		return -getValue();
-	};
-	operator float() const {return getValue();};
 	operator double() const {return getValue();};
-	operator long double() const {return getValue();};
 
 protected:
 	static int getMultiplier()
